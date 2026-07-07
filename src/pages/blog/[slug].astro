@@ -13,14 +13,25 @@ export async function getStaticPaths() {
     }
   `;
 
-  const data = await client.request(query);
-  
-  return data.posts.nodes.map((post) => ({
-    params: { slug: post.slug }
-  }));
+  try {
+    const data = await client.request(query);
+    
+    return data.posts.nodes.map((post) => ({
+      params: { slug: post.slug }
+    }));
+  } catch (error) {
+    console.error('Failed to fetch posts:', error);
+    // Return empty array jika gagal fetch
+    return [];
+  }
 }
 
 const { slug } = Astro.params;
+
+// Jika slug tidak ada (karena fetch gagal), redirect ke 404
+if (!slug) {
+  return Astro.redirect('/404');
+}
 
 const query = `
   query GetPostBySlug($slug: ID!) {
@@ -37,13 +48,23 @@ const query = `
   }
 `;
 
-const data = await client.request(query, { slug });
-const post = data.post;
+let post;
+try {
+  const data = await client.request(query, { slug });
+  post = data.post;
+} catch (error) {
+  console.error('Failed to fetch post:', error);
+  return Astro.redirect('/404');
+}
+
+// Jika post tidak ditemukan
+if (!post) {
+  return Astro.redirect('/404');
+}
 ---
 
 <BaseLayout title={post.title}>
   <article class="max-w-4xl mx-auto px-4 py-16">
-    <!-- Article Header -->
     <header class="mb-8">
       <h1 class="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
       <div class="flex items-center text-gray-600 text-sm">
@@ -59,12 +80,10 @@ const post = data.post;
       </div>
     </header>
 
-    <!-- Article Content dengan styling manual -->
     <div class="prose prose-lg max-w-none">
       <div class="text-gray-700 leading-relaxed space-y-4" set:html={post.content}></div>
     </div>
 
-    <!-- Back to Home -->
     <div class="mt-12 pt-8 border-t border-gray-200">
       <a href="/" class="text-blue-600 hover:underline font-medium">
         &larr; Kembali ke Beranda
@@ -72,6 +91,7 @@ const post = data.post;
     </div>
   </article>
 </BaseLayout>
+
 <style>
   @reference "tailwindcss";
   
