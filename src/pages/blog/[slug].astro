@@ -16,12 +16,6 @@ export async function getStaticPaths() {
   try {
     const data = await client.request(query);
     
-    // Cek apakah data dan posts ada
-    if (!data || !data.posts || !data.posts.nodes) {
-      console.warn('No posts data available');
-      return [];
-    }
-    
     return data.posts.nodes.map((post) => ({
       params: { slug: post.slug }
     }));
@@ -54,16 +48,13 @@ const query = `
   }
 `;
 
-let post = null;
+let post;
 try {
   const data = await client.request(query, { slug });
-  
-  // Cek apakah data dan post ada
-  if (data && data.post) {
-    post = data.post;
-  }
+  post = data.post;
 } catch (error) {
   console.error('Failed to fetch post:', error);
+  return Astro.redirect('/404');
 }
 
 // Jika post tidak ditemukan
