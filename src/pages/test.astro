@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { client } from '../lib/graphql';
+
+const query = `
+  query GetPosts {
+    posts {
+      nodes {
+        title
+        slug
+        excerpt
+        date
+      }
+    }
+  }
+`;
+
+let data;
+let error;
+
+try {
+  data = await client.request(query);
+} catch (e) {
+  error = e.message;
+}
+---
+
+<BaseLayout title="Test GraphQL - Wahanadigital">
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-6">Test GraphQL Connection</h1>
+    
+    {error ? (
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>Error:</strong> {error}
+      </div>
+    ) : (
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Posts from WordPress:</h2>
+        {data.posts.nodes.length === 0 ? (
+          <p class="text-gray-600">Belum ada post di WordPress.</p>
+        ) : (
+          <ul class="space-y-4">
+            {data.posts.nodes.map((post) => (
+              <li class="bg-white p-4 rounded shadow">
+                <h3 class="font-bold text-lg">{post.title}</h3>
+                <p class="text-gray-600 text-sm">{post.date}</p>
+                <div set:html={post.excerpt} class="mt-2 text-gray-700"></div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    )}
+    
+    <div class="mt-8">
+      <a href="/" class="text-blue-600 hover:underline">← Kembali ke Home</a>
+    </div>
+  </div>
+</BaseLayout>
