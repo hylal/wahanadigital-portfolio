@@ -19,11 +19,15 @@ const query = `
 let posts = [];
 try {
   const data = await client.request(query);
-  posts = data.posts.nodes;
+  
+  // Cek apakah data dan posts ada
+  if (data && data.posts && data.posts.nodes) {
+    posts = data.posts.nodes;
+  }
 } catch (error) {
   console.error("Gagal mengambil data:", error);
+  posts = []; // Pastikan posts tetap array kosong
 }
-
 // Data services
 const services = [
   {
