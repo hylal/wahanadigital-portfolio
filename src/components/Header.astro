@@ -2,37 +2,80 @@
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Tentang', href: '/about' },
+  { name: 'Layanan', href: '/#services' },
   { name: 'Portofolio', href: '/portfolio' },
   { name: 'Kontak', href: '/contact' },
 ];
 ---
 
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<header class="bg-emerald-900 border-b-2 border-emerald-800 sticky top-0 z-50 shadow-lg">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+    <div class="flex justify-between items-center h-20">
       <!-- Logo -->
-      <a href="/" class="text-xl font-bold text-gray-900 tracking-tight">
-        Wahanadigital<span class="text-blue-600">.</span>
+      <a href="/" class="flex items-center gap-2">
+        <span class="text-2xl font-bold text-white tracking-tight">
+          Wahanadigital<span class="text-lime-400">.</span>
+        </span>
       </a>
 
-      <!-- Navigation -->
-      <nav class="hidden md:flex space-x-8">
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
         {navLinks.map((link) => (
           <a 
             href={link.href} 
-            class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+            class="text-emerald-100 hover:text-lime-400 transition-colors font-medium"
           >
             {link.name}
           </a>
         ))}
+        <a 
+          href="https://wa.me/6285888888465" 
+          target="_blank"
+          class="px-6 py-2.5 bg-lime-400 text-emerald-900 font-semibold rounded-lg hover:bg-lime-300 transition shadow-md"
+        >
+          Konsultasi
+        </a>
       </nav>
 
       <!-- Mobile Menu Button -->
-      <button class="md:hidden text-gray-600">
+      <button id="mobile-menu-btn" class="md:hidden text-white p-2">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden pb-6">
+      <nav class="flex flex-col space-y-4">
+        {navLinks.map((link) => (
+          <a 
+            href={link.href} 
+            class="text-emerald-100 hover:text-lime-400 transition-colors font-medium"
+          >
+            {link.name}
+          </a>
+        ))}
+        <a 
+          href="https://wa.me/6285888888465" 
+          target="_blank"
+          class="px-6 py-2.5 bg-lime-400 text-emerald-900 font-semibold rounded-lg hover:bg-lime-300 transition text-center inline-block"
+        >
+          Konsultasi Gratis
+        </a>
+      </nav>
+    </div>
   </div>
 </header>
+
+<script>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
