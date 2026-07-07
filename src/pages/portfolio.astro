@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    title: 'Headless WordPress Architecture',
+    description: 'Implementasi arsitektur headless WordPress dengan Astro frontend dan GraphQL API untuk performa optimal dan SEO yang sempurna.',
+    tags: ['WordPress', 'Astro', 'GraphQL', 'Headless CMS'],
+    image: 'https://via.placeholder.com/600x400/3b82f6/ffffff?text=Headless+WP',
+    link: '#'
+  },
+  {
+    title: 'SEO & SEM Campaign',
+    description: 'Strategi komprehensif SEO dan SEM yang meningkatkan traffic organik 300% dan ROAS 5x dalam 6 bulan.',
+    tags: ['SEO', 'SEM', 'Google Ads', 'Analytics'],
+    image: 'https://via.placeholder.com/600x400/10b981/ffffff?text=SEO+Campaign',
+    link: '#'
+  },
+  {
+    title: 'E-Commerce Digital Transformation',
+    description: 'Transformasi digital untuk bisnis retail dengan integrasi payment gateway, inventory management, dan marketing automation.',
+    tags: ['E-Commerce', 'Digital Strategy', 'Automation'],
+    image: 'https://via.placeholder.com/600x400/f59e0b/ffffff?text=E-Commerce',
+    link: '#'
+  }
+];
+---
+
+<BaseLayout title="Portofolio">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Portofolio</h1>
+      <p class="text-xl text-gray-600">Beberapa project dan pencapaian yang telah saya kerjakan</p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map((project) => (
+        <article class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition">
+          <img src={project.image} alt={project.title} class="w-full h-48 object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+            <p class="text-gray-600 text-sm mb-4">{project.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag) => (
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <a href={project.link} class="text-blue-600 font-medium hover:underline text-sm">
+              Lihat Detail &rarr;
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-12">
+      <p class="text-gray-600 mb-4">Tertarik bekerja sama?</p>
+      <a href="/contact" class="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+        Hubungi Saya
+      </a>
+    </div>
+  </div>
+</BaseLayout>

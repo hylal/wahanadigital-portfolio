@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Kontak">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Hubungi Saya</h1>
+      <p class="text-xl text-gray-600">Mari diskusikan bagaimana saya bisa membantu bisnis Anda</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Contact Info -->
+      <div class="bg-white rounded-xl shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Kontak</h2>
+        
+        <div class="space-y-4">
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold text-gray-900">Email</h3>
+              <a href="mailto:hello@wahanadigital.com" class="text-blue-600 hover:underline">hello@wahanadigital.com</a>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold text-gray-900">Lokasi</h3>
+              <p class="text-gray-600">Jakarta, Indonesia</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold text-gray-900">LinkedIn</h3>
+              <a href="https://linkedin.com/in/hilaludinwahid" target="_blank" class="text-blue-600 hover:underline">linkedin.com/in/hilaludinwahid</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="bg-white rounded-xl shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Kirim Pesan</h2>
+        <form class="space-y-4" action="mailto:hello@wahanadigital.com" method="POST" enctype="text/plain">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
+            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"></textarea>
+          </div>
+          <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+            Kirim Pesan
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
