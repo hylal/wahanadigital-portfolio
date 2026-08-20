@@ -1,63 +1,88 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css'; // <-- PENTING: Tetap pertahankan baris ini!
+
 export interface Props {
   title: string;
   description?: string;
 }
 
 const { title, description = "Digital Marketing Professional dengan pengalaman 15+ tahun dalam SEO, SEM, dan Web Development" } = Astro.props;
+
+// Variabel dinamis untuk URL dan Gambar
+const currentUrl = `https://wahanadigital.com${Astro.url.pathname}`;
+const ogImage = "https://api.wahanadigital.com/wp-content/uploads/2026/08/og-image.jpg"; 
 ---
 
 <!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
+    <!-- 1. Viewport diperbaiki untuk mobile yang lebih optimal -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- 2. Primary Meta Tags -->
+    <title>{title} | WahanaDigital by Hilaludin Wahid</title>
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Hilaludin Wahid" />
+    <meta name="keywords" content="digital marketing, SEO, SEM, web development, WordPress, headless CMS, Jakarta" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- 3. Canonical URL (Mencegah duplicate content) -->
+    <link rel="canonical" href={currentUrl} />
+    
+    <!-- 4. Favicon & Generator -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    
-    <!-- Google Site Verification -->
+
+    <!-- 5. Google Site Verification -->
     <meta name="google-site-verification" content="2PvTRiPlFav83xSoPBDubo3aWg65AaSiJMFIcsbqNng" />
-    
-    <!-- SEO Meta Tags -->
-    <title>{title} | Wahanadigital</title>
-    <link rel="canonical" href={`https://wahanadigital.com${Astro.url.pathname}`} />
-    
-    <!-- Open Graph / Facebook -->
+
+    <!-- 6. Open Graph / Facebook / WhatsApp / LinkedIn -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`https://wahanadigital.com${Astro.url.pathname}`} />
-    <meta property="og:title" content={`${title} | Wahanadigital`} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={`${title} | WahanaDigital`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://wahanadigital.com/og-image.jpg" />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="id_ID" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={`https://wahanadigital.com${Astro.url.pathname}`} />
-    <meta property="twitter:title" content={`${title} | Wahanadigital`} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://wahanadigital.com/og-image.jpg" />
-    
-    <!-- Additional SEO -->
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Hilaludin Wahid" />
-    <meta name="keywords" content="digital marketing, SEO, SEM, web development, WordPress, headless CMS" />
-    <!-- Schema.org Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Hilaludin Wahid",
-  "url": "https://wahanadigital.com",
-  "jobTitle": "Digital Marketing Professional",
-  "description": "Digital Marketing Professional dengan pengalaman 15+ tahun dalam SEO, SEM, dan Web Development",
-  "sameAs": [
-    "https://linkedin.com/in/hilaludinwahid"
-  ],
-  "knowsAbout": ["Digital Marketing", "SEO", "SEM", "Web Development", "WordPress"]
-})}>
-</script>
+    <meta property="og:site_name" content="WahanaDigital" />
+
+    <!-- 7. Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={`${title} | WahanaDigital`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- 8. Schema.org Structured Data (JSON-LD) untuk Personal Branding -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hilaludin Wahid",
+      "url": "https://wahanadigital.com",
+      "jobTitle": "Digital Marketing Professional",
+      "description": description,
+      "sameAs": [
+        "https://linkedin.com/in/hilaludinwahid"
+      ],
+      "knowsAbout": ["Digital Marketing", "SEO", "SEM", "Web Development", "WordPress", "Headless CMS"]
+    })}></script>
   </head>
-  <body>
-    <slot />
+  
+  <!-- Ditambahkan font-sans agar selaras dengan Tailwind -->
+  <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen font-sans">
+    <Header />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
+
+<style is:global>
+  /* Fallback font jika Inter belum terload, sangat kompatibel dengan Tailwind */
+  body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+</style>
