@@ -4,6 +4,7 @@ const navLinks = [
   { name: 'Tentang', href: '/about' },
   { name: 'Layanan', href: '/#services' },
   { name: 'Portofolio', href: '/portfolio' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Kontak', href: '/contact' },
 ];
 ---
@@ -14,16 +15,16 @@ const navLinks = [
       <!-- Logo -->
       <a href="/" class="flex items-center gap-2">
         <span class="text-2xl font-bold text-white tracking-tight">
-          WahanaDigital<span class="text-lime-400">.</span>
+          Wahanadigital<span class="text-lime-400">.</span>
         </span>
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-8">
+      <nav class="hidden md:flex items-center space-x-6">
         {navLinks.map((link) => (
           <a 
             href={link.href} 
-            class="text-emerald-100 hover:text-lime-400 transition-colors font-medium"
+            class="text-emerald-100 hover:text-lime-400 transition-colors font-medium text-sm"
           >
             {link.name}
           </a>
@@ -31,7 +32,7 @@ const navLinks = [
         <a 
           href="https://wa.me/6285888888465" 
           target="_blank"
-          class="px-6 py-2.5 bg-lime-400 text-emerald-900 font-semibold rounded-lg hover:bg-lime-300 transition shadow-md"
+          class="px-6 py-2.5 bg-lime-400 text-emerald-900 font-semibold rounded-lg hover:bg-lime-300 transition shadow-md text-sm"
         >
           Konsultasi
         </a>
