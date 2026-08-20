@@ -16,6 +16,11 @@ export async function getStaticPaths() {
   try {
     const data = await client.request(query);
     
+    // Fallback aman jika data kosong
+    if (!data || !data.posts || !data.posts.nodes) {
+      return [];
+    }
+    
     return data.posts.nodes.map((post) => ({
       params: { slug: post.slug }
     }));
@@ -74,7 +79,8 @@ if (!post) {
           })}
         </time>
         <span class="mx-2">•</span>
-        <span>Oleh {post.author.node.name}</span>
+        <!-- PERBAIKAN DI SINI: Optional chaining untuk mencegah error jika author null -->
+        <span>Oleh {post.author?.node?.name || 'Admin'}</span>
       </div>
     </header>
 
@@ -95,12 +101,12 @@ if (!post) {
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt || post.title,
-    "url": `https://wahanadigital.com/blog/${post.slug}`,
+    "url": `https://wahanadigital.com/blog/${slug}`,
     "datePublished": post.date,
     "dateModified": post.date,
     "author": {
       "@type": "Person",
-      "name": post.author.node.name
+      "name": post.author?.node?.name || 'Hilaludin Wahid'
     },
     "publisher": {
       "@type": "Person",
