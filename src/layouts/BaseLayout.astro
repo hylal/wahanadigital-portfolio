@@ -1,14 +1,10 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import '../styles/global.css'; // <--- TAMBAHKAN BARIS INI
-
-interface Props {
+export interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Digital Marketing Professional Portfolio' } = Astro.props;
+const { title, description = "Digital Marketing Professional dengan pengalaman 15+ tahun dalam SEO, SEM, dan Web Development" } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,21 +12,52 @@ const { title, description = 'Digital Marketing Professional Portfolio' } = Astr
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title} | WahanaDigital by Hilaludin Wahid</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="2PvTRiPlFav83xSoPBDubo3aWg65AaSiJMFIcsbqNng" />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title} | Wahanadigital</title>
+    <link rel="canonical" href={`https://wahanadigital.com${Astro.url.pathname}`} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`https://wahanadigital.com${Astro.url.pathname}`} />
+    <meta property="og:title" content={`${title} | Wahanadigital`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://wahanadigital.com/og-image.jpg" />
+    <meta property="og:locale" content="id_ID" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={`https://wahanadigital.com${Astro.url.pathname}`} />
+    <meta property="twitter:title" content={`${title} | Wahanadigital`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://wahanadigital.com/og-image.jpg" />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Hilaludin Wahid" />
+    <meta name="keywords" content="digital marketing, SEO, SEM, web development, WordPress, headless CMS" />
+    <!-- Schema.org Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hilaludin Wahid",
+  "url": "https://wahanadigital.com",
+  "jobTitle": "Digital Marketing Professional",
+  "description": "Digital Marketing Professional dengan pengalaman 15+ tahun dalam SEO, SEM, dan Web Development",
+  "sameAs": [
+    "https://linkedin.com/in/hilaludinwahid"
+  ],
+  "knowsAbout": ["Digital Marketing", "SEO", "SEM", "Web Development", "WordPress"]
+})}>
+</script>
   </head>
-  <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
-    <Header />
-    <main class="flex-grow">
-      <slot />
-    </main>
-    <Footer />
+  <body>
+    <slot />
   </body>
 </html>
-
-<style is:global>
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-</style>

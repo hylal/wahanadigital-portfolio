@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wahanadigital.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /wp-admin/
+Disallow: /api/
