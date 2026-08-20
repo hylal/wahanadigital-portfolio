@@ -21,14 +21,12 @@ export async function getStaticPaths() {
     }));
   } catch (error) {
     console.error('Failed to fetch posts:', error);
-    // Return empty array jika gagal fetch
     return [];
   }
 }
 
 const { slug } = Astro.params;
 
-// Jika slug tidak ada (karena fetch gagal), redirect ke 404
 if (!slug) {
   return Astro.redirect('/404');
 }
@@ -39,6 +37,7 @@ const query = `
       title
       content
       date
+      excerpt
       author {
         node {
           name
@@ -57,7 +56,6 @@ try {
   return Astro.redirect('/404');
 }
 
-// Jika post tidak ditemukan
 if (!post) {
   return Astro.redirect('/404');
 }
@@ -85,11 +83,31 @@ if (!post) {
     </div>
 
     <div class="mt-12 pt-8 border-t border-gray-200">
-      <a href="/" class="text-blue-600 hover:underline font-medium">
-        &larr; Kembali ke Beranda
+      <a href="/blog" class="text-blue-600 hover:underline font-medium">
+        &larr; Kembali ke Blog
       </a>
     </div>
   </article>
+  
+  <!-- Schema.org Structured Data untuk Article -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt || post.title,
+    "url": `https://wahanadigital.com/blog/${post.slug}`,
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author.node.name
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Hilaludin Wahid"
+    }
+  })}>
+  </script>
 </BaseLayout>
 
 <style>
@@ -120,17 +138,3 @@ if (!post) {
     @apply border-l-4 border-blue-600 pl-4 italic text-gray-600 my-6;
   }
 </style>
-<!-- Tambahkan di BaseLayout atau blog detail -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [{
-    "@type": "Question",
-    "name": "Apa itu Digital Marketing?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Digital marketing adalah pemasaran produk atau jasa menggunakan teknologi digital, terutama internet."
-    }
-  }]
-})}>
-</script>
