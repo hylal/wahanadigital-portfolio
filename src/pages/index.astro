@@ -1,35 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { client } from '../lib/graphql';
-
-// Fetch latest posts dari WordPress
-const query = `
-  query GetLatestPosts {
-    posts(first: 3) {
-      nodes {
-        title
-        slug
-        excerpt
-        date
-        featuredImage {
-          node {
-            sourceUrl
-            altText
-          }
-        }
-      }
-    }
-  }
-`;
+import { getLatestPosts } from '../lib/posts';
 
 let posts = [];
 try {
-  const data = await client.request(query);
-  
-  // Cek apakah data dan posts ada
-  if (data && data.posts && data.posts.nodes) {
-    posts = data.posts.nodes;
-  }
+  posts = await getLatestPosts(3);
 } catch (error) {
   console.error("Gagal mengambil data:", error);
   posts = [];

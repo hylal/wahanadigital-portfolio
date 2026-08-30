@@ -1,65 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { client } from '../../lib/graphql';
+import { getAllPosts, getPostBySlug } from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const query = `
-    query GetAllPosts {
-      posts {
-        nodes {
-          slug
-        }
-      }
-    }
-  `;
-
+  let posts = [];
   try {
-    const data = await client.request(query);
-    
-    // Fallback aman jika data kosong
-    if (!data || !data.posts || !data.posts.nodes) {
-      return [];
-    }
-    
-    return data.posts.nodes.map((post) => ({
-      params: { slug: post.slug }
-    }));
+    posts = await getAllPosts();
   } catch (error) {
     console.error('Failed to fetch posts:', error);
-    return [];
+    posts = [];
   }
+  
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
 }
 
 const { slug } = Astro.params;
-
-if (!slug) {
-  return Astro.redirect('/404');
-}
-
-const query = `
-  query GetPostBySlug($slug: ID!) {
-    post(id: $slug, idType: SLUG) {
-      title
-      content
-      date
-      excerpt
-      author {
-        node {
-          name
-        }
-      }
-    }
-  }
-`;
-
-let post;
-try {
-  const data = await client.request(query, { slug });
-  post = data.post;
-} catch (error) {
-  console.error('Failed to fetch post:', error);
-  return Astro.redirect('/404');
-}
+const { post } = Astro.props;
 
 if (!post) {
   return Astro.redirect('/404');

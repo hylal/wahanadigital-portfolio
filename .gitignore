@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# post cache (generated)
+src/data/posts-cache.json
+src/data/posts-cache-meta.json

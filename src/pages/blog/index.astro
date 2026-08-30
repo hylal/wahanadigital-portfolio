@@ -1,44 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { client } from '../../lib/graphql';
-
-// Fetch semua posts dari WordPress (dengan featured image)
-const query = `
-  query GetAllPosts {
-    posts(first: 50) {
-      nodes {
-        title
-        slug
-        excerpt
-        date
-        featuredImage {
-          node {
-            sourceUrl
-            altText
-            mediaDetails {
-              width
-              height
-            }
-          }
-        }
-        author {
-          node {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
+import { getAllPosts, getPostBySlug } from '../../lib/posts';
 
 let posts = [];
 try {
-  const data = await client.request(query);
-  
-  // Cek apakah data dan posts ada
-  if (data && data.posts && data.posts.nodes) {
-    posts = data.posts.nodes;
-  }
+  posts = await getAllPosts();
 } catch (error) {
   console.error("Gagal mengambil data posts:", error);
   posts = [];
