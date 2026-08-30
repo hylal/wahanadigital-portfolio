@@ -24,6 +24,28 @@ const projects = [
     link: '#'
   }
 ];
+
+const clientSites = [
+  'ob-fit.com',
+  'MULTIMEDIALASER.COM',
+  'MMPADV.COM',
+  'MULIACAHAYALASER.COM',
+  'MULIACAHAYABENDING.COM',
+  'MULIACAHAYABENDINGs.COM',
+  'dhinarrgenteng.com',
+  'pusatgentengmurahterbaik.com',
+  'gudangatapjateng.com',
+  'bursamegaatap.com',
+  'themeathouseid.com',
+  'rubymarmer.com',
+  'terminalatapmandiri.com'
+].map((domain) => {
+  const clean = domain.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+  return {
+    domain: clean,
+    url: `https://${clean}`
+  };
+});
 ---
 
 <BaseLayout title="Portofolio">
@@ -55,6 +77,32 @@ const projects = [
           </div>
         </article>
       ))}
+    </div>
+
+    <!-- Client Websites -->
+    <div class="mt-20">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-emerald-900 mb-3">Website Klien</h2>
+        <p class="text-lg text-gray-600">Kumpulan website yang telah dibangun dan dikembangkan</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {clientSites.map((site) => (
+          <a
+            href={site.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex items-center justify-between gap-2 bg-white border border-gray-200 rounded-xl px-5 py-4 shadow-sm hover:shadow-lg hover:border-emerald-400 transition"
+          >
+            <span class="font-semibold text-gray-800 text-sm truncate group-hover:text-emerald-700 transition">
+              {site.domain}
+            </span>
+            <svg class="w-4 h-4 flex-shrink-0 text-emerald-600 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        ))}
+      </div>
     </div>
 
     <!-- CTA -->
